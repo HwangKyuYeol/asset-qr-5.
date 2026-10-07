@@ -6,38 +6,28 @@
 <meta name="theme-color" content="#176b37">
 <title>건설근로자공제회 자산 QR 스캔</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#f3f5f7;color:#17202d;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
-.wrap{max-width:620px;margin:auto;padding:16px 14px 40px}
-.card{background:#fff;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 5px 22px rgba(0,0,0,.06)}
-h1{margin:0 0 7px;font-size:25px}.sub{color:#6b7280;line-height:1.55;font-size:14px}
-#reader{width:100%;overflow:hidden;border-radius:18px;background:#111;margin-top:14px;min-height:0}
-#reader video{border-radius:18px!important;object-fit:cover!important}
-button{width:100%;height:56px;border:0;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer}
-.start{background:#176b37;color:#fff}.stop{background:#9b2c2c;color:#fff;margin-top:10px;display:none}
-.status{margin-top:13px;padding:13px 14px;border-radius:12px;background:#eef6f0;color:#176b37;font-size:14px;line-height:1.55}
-.tools{display:none;margin-top:12px;padding:12px;border-radius:14px;background:#f7f8fa}
-.toolrow{display:flex;align-items:center;gap:10px;margin:4px 0}.toolrow label{font-size:13px;font-weight:700;min-width:62px}.toolrow input[type=range]{flex:1}.zoomValue{font-size:13px;min-width:36px;text-align:right}
-.smallBtn{height:42px;background:#e9eef2;color:#17202d;font-size:14px;margin-top:9px}
-.manual{display:flex;gap:8px;margin-top:13px}
-input[type=text]{min-width:0;flex:1;height:50px;border:1px solid #d7dce2;border-radius:12px;padding:0 13px;font-size:16px;text-transform:uppercase}
-.go{width:110px;height:50px;background:#17202d;color:#fff;font-size:15px}
-.hint{font-size:12px;color:#7b8492;line-height:1.55;margin-top:11px}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef6f0;color:#176b37;font-size:12px;font-weight:700;margin-top:8px}
+*{box-sizing:border-box} body{margin:0;background:#f3f5f7;color:#17202d;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.wrap{max-width:640px;margin:auto;padding:16px 14px 42px}.card{background:#fff;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 5px 22px rgba(0,0,0,.06)}
+h1{margin:0 0 7px;font-size:25px}.sub{color:#6b7280;line-height:1.55;font-size:14px}.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eef6f0;color:#176b37;font-size:12px;font-weight:800;margin-top:8px}
+button{width:100%;height:56px;border:0;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer}.start{background:#176b37;color:#fff}.stop{background:#9b2c2c;color:#fff;margin-top:10px;display:none}.secondary{background:#17202d;color:#fff}.outline{background:#fff;color:#176b37;border:1px solid #b9d4c1;margin-top:10px}
+#reader{width:100%;overflow:hidden;border-radius:18px;background:#111;margin-top:14px;min-height:0}#reader video{border-radius:18px!important;object-fit:cover!important}.status{margin-top:13px;padding:13px 14px;border-radius:12px;background:#eef6f0;color:#176b37;font-size:14px;line-height:1.55}.hint{font-size:12px;color:#7b8492;line-height:1.55;margin-top:11px}
+.tools{display:none;margin-top:12px;padding:12px;border-radius:14px;background:#f7f8fa}.toolrow{display:flex;align-items:center;gap:10px}.toolrow label{font-size:13px;font-weight:700;min-width:62px}.toolrow input{flex:1}.zoomValue{font-size:13px;min-width:40px;text-align:right}
+.manual{display:flex;gap:8px;margin-top:14px}input,select,textarea{width:100%;border:1px solid #d7dce2;border-radius:12px;padding:0 13px;font-size:16px;background:#fff;color:#17202d}input,select{height:50px}textarea{min-height:90px;padding-top:12px;resize:vertical}.manual input{min-width:0;flex:1;text-transform:uppercase}.manual button{width:110px;height:50px;font-size:15px}
+.divider{height:1px;background:#e8ebef;margin:20px 0}.sectionTitle{font-size:18px;font-weight:900;margin:0 0 6px}.field{margin-top:12px}.field label{display:block;font-size:13px;font-weight:800;margin:0 0 6px;color:#475569}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.registerBox{display:none}.notice{padding:12px 13px;border-radius:12px;background:#fff8e7;color:#7c5a12;font-size:13px;line-height:1.55;margin-bottom:12px}.required{color:#b42318}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.card{padding:18px}.wrap{padding-left:12px;padding-right:12px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="card">
     <h1>자산 QR 스캔</h1>
-    <div class="sub">작은 자산 QR도 빠르게 읽도록 후면카메라·고해상도·넓은 인식영역을 우선 사용합니다.</div>
-    <span class="badge">QR 인식 강화 버전</span>
+    <div class="sub">아이폰 Safari에서 안정적으로 후면 카메라를 먼저 연 뒤, 지원되는 기기에서만 확대 기능을 적용합니다.</div>
+    <span class="badge">안정화 + QR 인식 강화</span>
   </div>
 
   <div class="card">
-    <button id="startBtn" class="start" onclick="startScanner()">카메라로 QR 스캔</button>
-    <button id="stopBtn" class="stop" onclick="stopScanner()">스캔 종료</button>
-
+    <button id="startBtn" class="start" type="button" onclick="startScanner()">카메라로 QR 스캔</button>
+    <button id="stopBtn" class="stop" type="button" onclick="stopScanner()">스캔 종료</button>
     <div id="reader"></div>
 
     <div id="tools" class="tools">
@@ -46,201 +36,146 @@ input[type=text]{min-width:0;flex:1;height:50px;border:1px solid #d7dce2;border-
         <input id="zoomRange" type="range" step="0.1" oninput="changeZoom(this.value)">
         <span id="zoomValue" class="zoomValue">1.0×</span>
       </div>
-      <button id="torchBtn" class="smallBtn" style="display:none" onclick="toggleTorch()">플래시 켜기</button>
     </div>
 
     <div id="status" class="status">버튼을 누르면 후면 카메라가 실행됩니다.</div>
-    <div class="hint">QR을 화면 중앙에 두고 20~50cm 정도 거리에서 천천히 맞춰보세요. QR이 작으면 ‘화면 확대’가 표시되는 기기에서 확대하면 더 멀리서도 인식하기 쉽습니다.</div>
+    <div class="hint">QR을 화면 중앙에 맞춰주세요. 카메라가 열린 뒤 기기가 지원하면 확대 조절이 표시됩니다. 확대 기능이 없어도 QR 스캔은 정상 동작합니다.</div>
 
     <div class="manual">
       <input id="assetNo" type="text" placeholder="A20190362" autocomplete="off" autocapitalize="characters">
-      <button class="go" onclick="manualGo()">직접 조회</button>
+      <button class="secondary" type="button" onclick="manualGo()">직접 조회</button>
     </div>
+
+    <div class="divider"></div>
+    <div class="sectionTitle">미등록 자산인가요?</div>
+    <div class="sub">자산마스터에 없는 장비는 아래에서 직접 등록할 수 있습니다.</div>
+    <button class="outline" type="button" onclick="toggleRegister()">미등록 자산 수동 추가</button>
+  </div>
+
+  <div id="registerBox" class="card registerBox">
+    <div class="sectionTitle">미등록 자산 등록</div>
+    <div class="notice">등록하면 <b>자산마스터</b>에 새 행으로 추가됩니다. 자산번호 중복 여부는 서버에서 다시 확인합니다.</div>
+
+    <form id="registerForm" method="post" action="https://script.google.com/macros/s/AKfycbwa0sT0E5Y3Acp70kz__BXMgE_nffHA-CBw6hSQIEkfK7KY1ndJxsg1dkEY47hn9HnnFw/exec" onsubmit="return prepareRegister()">
+      <input type="hidden" name="action" value="registerAsset">
+      <div class="field"><label>자산번호 <span class="required">*</span></label><input id="regAssetNo" name="assetNo" placeholder="A20190362" required autocapitalize="characters"></div>
+      <div class="grid">
+        <div class="field"><label>자산 구분 <span class="required">*</span></label><input name="assetGroup" placeholder="예: 데스크톱" required></div>
+        <div class="field"><label>부서명</label><input name="dept" placeholder="예: 정보화지원팀"></div>
+        <div class="field"><label>위치</label><input name="location" placeholder="예: 본회 5층"></div>
+        <div class="field"><label>모델명</label><input name="model" placeholder="모델명"></div>
+        <div class="field"><label>취득일자(제조년월)</label><input name="acquiredDate" placeholder="예: 2019-03"></div>
+        <div class="field"><label>사용자</label><input name="user" placeholder="사용자명"></div>
+        <div class="field"><label>CPU</label><input name="cpu" placeholder="CPU"></div>
+        <div class="field"><label>RAM</label><input name="ram" placeholder="예: 16GB"></div>
+        <div class="field"><label>MAC</label><input name="mac" placeholder="MAC 주소"></div>
+        <div class="field"><label>상태</label><select name="status"><option value="사용" selected>사용</option><option value="유휴">유휴</option><option value="파손">파손</option><option value="수리필요">수리필요</option><option value="폐기대상">폐기대상</option></select></div>
+      </div>
+      <div class="field"><label>비고사항</label><textarea name="note" placeholder="특이사항이 있으면 입력해주세요."></textarea></div>
+      <button class="start" type="submit" style="margin-top:14px">자산마스터에 등록</button>
+      <button class="outline" type="button" onclick="toggleRegister(false)">등록 취소</button>
+    </form>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwa0sT0E5Y3Acp70kz__BXMgE_nffHA-CBw6hSQIEkfK7KY1ndJxsg1dkEY47hn9HnnFw/exec";
-let scanner = null;
-let running = false;
-let locked = false;
-let torchOn = false;
-let lastUnknownAt = 0;
+let scanner=null, running=false, locked=false;
 
 function extractAssetNo(raw){
-  const text = String(raw || '').toUpperCase();
-  const m = text.match(/A\s*[-_]?\s*(\d{8})/i);
-  return m ? 'A' + m[1] : '';
+  const text=String(raw||'').toUpperCase();
+  const m=text.match(/A\s*[-_]?\s*(\d{8})/i);
+  return m?'A'+m[1]:'';
 }
-
-function setStatus(msg, error=false){
-  const el = document.getElementById('status');
-  el.textContent = msg;
-  el.style.background = error ? '#fef2f2' : '#eef6f0';
-  el.style.color = error ? '#991b1b' : '#176b37';
+function setStatus(msg,error=false){
+  const el=document.getElementById('status'); el.textContent=msg;
+  el.style.background=error?'#fef2f2':'#eef6f0'; el.style.color=error?'#991b1b':'#176b37';
 }
-
 async function startScanner(){
-  if (running) return;
-  locked = false;
-  torchOn = false;
-  setStatus('고해상도 후면 카메라를 준비하고 있습니다...');
-
-  if (typeof Html5Qrcode === 'undefined') {
-    setStatus('QR 스캔 모듈을 불러오지 못했습니다. 인터넷 연결 후 새로고침해주세요.', true);
-    return;
-  }
-
-  try {
-    scanner = scanner || new Html5Qrcode('reader', {
-      formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
-      verbose: false
-    });
-
-    const config = {
-      fps: 20,
-      qrbox: (viewWidth, viewHeight) => {
-        const side = Math.floor(Math.min(viewWidth, viewHeight) * 0.90);
-        return { width: side, height: side };
-      },
-      aspectRatio: 16 / 9,
-      disableFlip: false,
-      experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+  if(running)return;
+  locked=false;
+  if(typeof Html5Qrcode==='undefined'){setStatus('QR 스캔 모듈을 불러오지 못했습니다. 인터넷 연결 후 새로고침해주세요.',true);return;}
+  setStatus('후면 카메라를 여는 중입니다...');
+  try{
+    // iPhone Safari 안정성을 위해 시작 단계에서는 해상도/초점/줌을 강제로 요구하지 않습니다.
+    scanner=new Html5Qrcode('reader',{formatsToSupport:[Html5QrcodeSupportedFormats.QR_CODE],verbose:false});
+    const config={
+      fps:15,
+      qrbox:(w,h)=>{const side=Math.floor(Math.min(w,h)*0.86);return {width:side,height:side};},
+      disableFlip:false,
+      experimentalFeatures:{useBarCodeDetectorIfSupported:true}
     };
-
-    // 후면 카메라 + 가능한 경우 Full HD 해상도를 우선 요청합니다.
-    const cameraConstraints = {
-      facingMode: { ideal: 'environment' },
-      width: { ideal: 1920 },
-      height: { ideal: 1080 }
-    };
-
-    try {
-      await scanner.start(cameraConstraints, config, onSuccess, onScanFailure);
-    } catch (highResError) {
-      // 일부 iPhone/Safari에서 해상도 제약을 거부하면 후면카메라만 요청하여 재시도합니다.
-      await scanner.start({ facingMode: 'environment' }, config, onSuccess, onScanFailure);
-    }
-
-    running = true;
-    document.getElementById('startBtn').style.display = 'none';
-    document.getElementById('stopBtn').style.display = 'block';
-    setStatus('스캔 중입니다. QR을 중앙에 맞춰주세요. 작은 QR은 화면 확대 기능을 사용해보세요.');
-
-    await setupCameraTools();
-  } catch (e) {
+    await scanner.start({facingMode:'environment'},config,onSuccess,()=>{});
+    running=true;
+    document.getElementById('startBtn').style.display='none';
+    document.getElementById('stopBtn').style.display='block';
+    setStatus('스캔 중입니다. QR을 화면 중앙에 맞춰주세요.');
+    // 카메라가 정상적으로 열린 뒤에만 선택 기능을 적용합니다.
+    setTimeout(setupCameraTools,350);
+  }catch(e){
     console.error(e);
-    setStatus('카메라를 열 수 없습니다. Safari에서 이 사이트의 카메라 권한을 허용한 뒤 새로고침해주세요.', true);
+    scanner=null; running=false;
+    const detail=(e&&e.message)?' ('+e.message+')':'';
+    setStatus('카메라를 열 수 없습니다. Safari의 이 사이트 카메라 권한을 확인해주세요.'+detail,true);
   }
 }
-
-function onScanFailure(){
-  // 매 프레임마다 오류 문구를 표시하지 않습니다.
-}
-
 async function setupCameraTools(){
-  const tools = document.getElementById('tools');
-  const zoomRow = document.getElementById('zoomRow');
-  const torchBtn = document.getElementById('torchBtn');
-  let hasTool = false;
-
-  try {
-    const caps = scanner.getRunningTrackCapabilities ? scanner.getRunningTrackCapabilities() : {};
-    const settings = scanner.getRunningTrackSettings ? scanner.getRunningTrackSettings() : {};
-
-    if (caps && caps.zoom && Number.isFinite(caps.zoom.min) && Number.isFinite(caps.zoom.max) && caps.zoom.max > caps.zoom.min) {
-      const range = document.getElementById('zoomRange');
-      const current = Number(settings.zoom || caps.zoom.min || 1);
-      range.min = caps.zoom.min;
-      range.max = caps.zoom.max;
-      range.step = caps.zoom.step || 0.1;
-      range.value = current;
-      document.getElementById('zoomValue').textContent = current.toFixed(1) + '×';
-      zoomRow.style.display = 'flex';
-      hasTool = true;
+  if(!scanner||!running)return;
+  try{
+    const caps=scanner.getRunningTrackCapabilities?scanner.getRunningTrackCapabilities():{};
+    const settings=scanner.getRunningTrackSettings?scanner.getRunningTrackSettings():{};
+    if(caps&&caps.zoom&&Number.isFinite(caps.zoom.min)&&Number.isFinite(caps.zoom.max)&&caps.zoom.max>caps.zoom.min){
+      const range=document.getElementById('zoomRange');
+      const current=Number(settings.zoom||caps.zoom.min||1);
+      range.min=caps.zoom.min; range.max=caps.zoom.max; range.step=caps.zoom.step||0.1; range.value=current;
+      document.getElementById('zoomValue').textContent=current.toFixed(1)+'×';
+      document.getElementById('zoomRow').style.display='flex'; document.getElementById('tools').style.display='block';
     }
-
-    if (caps && caps.torch) {
-      torchBtn.style.display = 'block';
-      hasTool = true;
-    }
-
-    // 지원되는 브라우저에서는 연속 초점을 우선 요청합니다.
-    if (caps && Array.isArray(caps.focusMode) && caps.focusMode.includes('continuous')) {
-      try {
-        await scanner.applyVideoConstraints({ advanced: [{ focusMode: 'continuous' }] });
-      } catch (_) {}
-    }
-  } catch (_) {}
-
-  tools.style.display = hasTool ? 'block' : 'none';
+  }catch(e){ console.log('선택 카메라 기능 미지원',e); }
 }
-
 async function changeZoom(value){
-  if (!scanner || !running) return;
-  const z = Number(value);
-  document.getElementById('zoomValue').textContent = z.toFixed(1) + '×';
-  try {
-    await scanner.applyVideoConstraints({ advanced: [{ zoom: z }] });
-  } catch (_) {}
+  if(!scanner||!running)return;
+  const z=Number(value); document.getElementById('zoomValue').textContent=z.toFixed(1)+'×';
+  try{await scanner.applyVideoConstraints({advanced:[{zoom:z}]});}catch(e){}
 }
-
-async function toggleTorch(){
-  if (!scanner || !running) return;
-  torchOn = !torchOn;
-  try {
-    await scanner.applyVideoConstraints({ advanced: [{ torch: torchOn }] });
-    document.getElementById('torchBtn').textContent = torchOn ? '플래시 끄기' : '플래시 켜기';
-  } catch (_) {
-    torchOn = false;
-  }
-}
-
 async function stopScanner(){
-  if (scanner && running) {
-    try { await scanner.stop(); } catch (_) {}
-  }
-  running = false;
-  torchOn = false;
-  document.getElementById('startBtn').style.display = 'block';
-  document.getElementById('stopBtn').style.display = 'none';
-  document.getElementById('tools').style.display = 'none';
+  if(scanner&&running){try{await scanner.stop();}catch(e){}}
+  running=false; scanner=null;
+  document.getElementById('reader').innerHTML='';
+  document.getElementById('startBtn').style.display='block'; document.getElementById('stopBtn').style.display='none'; document.getElementById('tools').style.display='none';
   setStatus('스캔을 종료했습니다.');
 }
-
 async function onSuccess(decodedText){
-  if (locked) return;
-
-  const assetNo = extractAssetNo(decodedText);
-  if (!assetNo) {
-    const now = Date.now();
-    if (now - lastUnknownAt > 1800) {
-      lastUnknownAt = now;
-      setStatus('QR은 읽었습니다. 자산번호 형식을 확인하고 있습니다...', true);
-    }
-    return;
-  }
-
-  locked = true;
-  document.getElementById('assetNo').value = assetNo;
-  setStatus('인식 완료: ' + assetNo + ' · 자산점검 화면으로 이동합니다.');
-
-  try {
-    if (scanner && running) await scanner.stop();
-  } catch (_) {}
-
-  running = false;
-  location.href = GAS_URL + '?asset=' + encodeURIComponent(assetNo);
+  if(locked)return;
+  const assetNo=extractAssetNo(decodedText);
+  if(!assetNo){setStatus('QR은 읽었지만 A + 숫자 8자리 자산번호를 찾지 못했습니다.',true);return;}
+  locked=true; document.getElementById('assetNo').value=assetNo;
+  setStatus('인식 완료: '+assetNo+' · 자산점검 화면으로 이동합니다.');
+  try{if(scanner&&running)await scanner.stop();}catch(e){}
+  location.href=GAS_URL+'?asset='+encodeURIComponent(assetNo);
 }
-
 function manualGo(){
-  const assetNo = extractAssetNo(document.getElementById('assetNo').value);
-  if (!assetNo) {
-    setStatus('A20190362 형식으로 자산번호를 입력해주세요.', true);
-    return;
+  const assetNo=extractAssetNo(document.getElementById('assetNo').value);
+  if(!assetNo){setStatus('A20190362 형식으로 자산번호를 입력해주세요.',true);return;}
+  location.href=GAS_URL+'?asset='+encodeURIComponent(assetNo);
+}
+function toggleRegister(force){
+  const box=document.getElementById('registerBox');
+  const show=typeof force==='boolean'?force:(box.style.display!=='block');
+  box.style.display=show?'block':'none';
+  if(show){
+    const typed=extractAssetNo(document.getElementById('assetNo').value);
+    if(typed)document.getElementById('regAssetNo').value=typed;
+    box.scrollIntoView({behavior:'smooth',block:'start'});
   }
-  location.href = GAS_URL + '?asset=' + encodeURIComponent(assetNo);
+}
+function prepareRegister(){
+  const el=document.getElementById('regAssetNo');
+  const assetNo=extractAssetNo(el.value);
+  if(!assetNo){alert('자산번호는 A20190362 형식으로 입력해주세요.');el.focus();return false;}
+  el.value=assetNo;
+  return confirm(assetNo+' 자산을 자산마스터에 새로 등록할까요?');
 }
 </script>
 </body>
