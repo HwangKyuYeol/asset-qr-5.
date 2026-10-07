@@ -2,110 +2,245 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#176b37">
 <title>건설근로자공제회 자산 QR 스캔</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f3f5f7;color:#17202d;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
-.wrap{max-width:560px;margin:auto;padding:18px 14px 40px}
-.card{background:#fff;border-radius:22px;padding:22px;margin-bottom:16px;box-shadow:0 5px 22px rgba(0,0,0,.06)}
-h1{margin:0 0 8px;font-size:25px}.sub{color:#6b7280;line-height:1.55;font-size:14px}
-#reader{width:100%;overflow:hidden;border-radius:16px;background:#111;margin-top:16px}
-#reader video{border-radius:16px!important;object-fit:cover!important}
-button{width:100%;height:56px;border:0;border-radius:14px;font-size:18px;font-weight:800}
+.wrap{max-width:620px;margin:auto;padding:16px 14px 40px}
+.card{background:#fff;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 5px 22px rgba(0,0,0,.06)}
+h1{margin:0 0 7px;font-size:25px}.sub{color:#6b7280;line-height:1.55;font-size:14px}
+#reader{width:100%;overflow:hidden;border-radius:18px;background:#111;margin-top:14px;min-height:0}
+#reader video{border-radius:18px!important;object-fit:cover!important}
+button{width:100%;height:56px;border:0;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer}
 .start{background:#176b37;color:#fff}.stop{background:#9b2c2c;color:#fff;margin-top:10px;display:none}
-.status{margin-top:14px;padding:13px 14px;border-radius:12px;background:#eef6f0;color:#176b37;font-size:14px;line-height:1.5}
-.manual{display:flex;gap:8px;margin-top:12px}
-input{min-width:0;flex:1;height:50px;border:1px solid #d7dce2;border-radius:12px;padding:0 13px;font-size:16px;text-transform:uppercase}
+.status{margin-top:13px;padding:13px 14px;border-radius:12px;background:#eef6f0;color:#176b37;font-size:14px;line-height:1.55}
+.tools{display:none;margin-top:12px;padding:12px;border-radius:14px;background:#f7f8fa}
+.toolrow{display:flex;align-items:center;gap:10px;margin:4px 0}.toolrow label{font-size:13px;font-weight:700;min-width:62px}.toolrow input[type=range]{flex:1}.zoomValue{font-size:13px;min-width:36px;text-align:right}
+.smallBtn{height:42px;background:#e9eef2;color:#17202d;font-size:14px;margin-top:9px}
+.manual{display:flex;gap:8px;margin-top:13px}
+input[type=text]{min-width:0;flex:1;height:50px;border:1px solid #d7dce2;border-radius:12px;padding:0 13px;font-size:16px;text-transform:uppercase}
 .go{width:110px;height:50px;background:#17202d;color:#fff;font-size:15px}
-.hint{font-size:12px;color:#7b8492;line-height:1.5;margin-top:12px}
+.hint{font-size:12px;color:#7b8492;line-height:1.55;margin-top:11px}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef6f0;color:#176b37;font-size:12px;font-weight:700;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="card">
-<h1>자산 QR 스캔</h1>
-<div class="sub">QR을 인식하면 자산번호를 추출하여 자산점검 화면으로 자동 이동합니다.</div>
-</div>
-<div class="card">
-<button id="startBtn" class="start" onclick="startScanner()">카메라로 QR 스캔</button>
-<button id="stopBtn" class="stop" onclick="stopScanner()">스캔 종료</button>
-<div id="reader"></div>
-<div id="status" class="status">버튼을 누르면 후면 카메라가 실행됩니다.</div>
-<div class="hint">QR이 사각형 안에 들어오도록 맞춰주세요. 처음 실행할 때 Safari에서 카메라 접근을 묻는 창이 나오면 ‘허용’을 눌러주세요.</div>
-<div class="manual">
-<input id="assetNo" placeholder="A20190362" autocomplete="off">
-<button class="go" onclick="manualGo()">직접 조회</button>
-</div>
-</div>
+  <div class="card">
+    <h1>자산 QR 스캔</h1>
+    <div class="sub">작은 자산 QR도 빠르게 읽도록 후면카메라·고해상도·넓은 인식영역을 우선 사용합니다.</div>
+    <span class="badge">QR 인식 강화 버전</span>
+  </div>
+
+  <div class="card">
+    <button id="startBtn" class="start" onclick="startScanner()">카메라로 QR 스캔</button>
+    <button id="stopBtn" class="stop" onclick="stopScanner()">스캔 종료</button>
+
+    <div id="reader"></div>
+
+    <div id="tools" class="tools">
+      <div id="zoomRow" class="toolrow" style="display:none">
+        <label for="zoomRange">화면 확대</label>
+        <input id="zoomRange" type="range" step="0.1" oninput="changeZoom(this.value)">
+        <span id="zoomValue" class="zoomValue">1.0×</span>
+      </div>
+      <button id="torchBtn" class="smallBtn" style="display:none" onclick="toggleTorch()">플래시 켜기</button>
+    </div>
+
+    <div id="status" class="status">버튼을 누르면 후면 카메라가 실행됩니다.</div>
+    <div class="hint">QR을 화면 중앙에 두고 20~50cm 정도 거리에서 천천히 맞춰보세요. QR이 작으면 ‘화면 확대’가 표시되는 기기에서 확대하면 더 멀리서도 인식하기 쉽습니다.</div>
+
+    <div class="manual">
+      <input id="assetNo" type="text" placeholder="A20190362" autocomplete="off" autocapitalize="characters">
+      <button class="go" onclick="manualGo()">직접 조회</button>
+    </div>
+  </div>
 </div>
 
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwa0sT0E5Y3Acp70kz__BXMgE_nffHA-CBw6hSQIEkfK7KY1ndJxsg1dkEY47hn9HnnFw/exec";
-let scanner=null, running=false, locked=false;
+let scanner = null;
+let running = false;
+let locked = false;
+let torchOn = false;
+let lastUnknownAt = 0;
 
 function extractAssetNo(raw){
-  const text=String(raw||'').toUpperCase();
-  const m=text.match(/A\s*[-_]?\s*(\d{8})/i);
-  return m ? 'A'+m[1] : '';
+  const text = String(raw || '').toUpperCase();
+  const m = text.match(/A\s*[-_]?\s*(\d{8})/i);
+  return m ? 'A' + m[1] : '';
 }
-function setStatus(msg,error=false){
-  const el=document.getElementById('status');
-  el.textContent=msg;
-  el.style.background=error?'#fef2f2':'#eef6f0';
-  el.style.color=error?'#991b1b':'#176b37';
+
+function setStatus(msg, error=false){
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.style.background = error ? '#fef2f2' : '#eef6f0';
+  el.style.color = error ? '#991b1b' : '#176b37';
 }
+
 async function startScanner(){
-  if(running)return;
-  locked=false; setStatus('카메라를 준비하고 있습니다...');
-  try{
-    scanner=scanner||new Html5Qrcode('reader',{formatsToSupport:[Html5QrcodeSupportedFormats.QR_CODE],verbose:false});
-    const config={
-      fps:15,
-      qrbox:(w,h)=>{const s=Math.floor(Math.min(w,h)*0.72);return {width:s,height:s};},
-      aspectRatio:1,
-      disableFlip:false,
-      experimentalFeatures:{useBarCodeDetectorIfSupported:true}
-    };
-    try{
-      await scanner.start({facingMode:{exact:'environment'}},config,onSuccess,()=>{});
-    }catch(firstErr){
-      await scanner.start({facingMode:'environment'},config,onSuccess,()=>{});
-    }
-    running=true;
-    document.getElementById('startBtn').style.display='none';
-    document.getElementById('stopBtn').style.display='block';
-    setStatus('스캔 중입니다. QR을 사각형 안에 맞춰주세요.');
-  }catch(e){
-    setStatus('카메라를 열 수 없습니다. Safari에서 이 사이트의 카메라 권한을 허용한 뒤 새로고침해주세요.',true);
-  }
-}
-async function stopScanner(){
-  if(scanner&&running){try{await scanner.stop();}catch(e){}}
-  running=false;
-  document.getElementById('startBtn').style.display='block';
-  document.getElementById('stopBtn').style.display='none';
-  setStatus('스캔을 종료했습니다.');
-}
-async function onSuccess(decodedText){
-  if(locked)return;
-  const assetNo=extractAssetNo(decodedText);
-  if(!assetNo){
-    setStatus('QR은 읽었지만 자산번호(A + 숫자 8자리)를 찾지 못했습니다.',true);
+  if (running) return;
+  locked = false;
+  torchOn = false;
+  setStatus('고해상도 후면 카메라를 준비하고 있습니다...');
+
+  if (typeof Html5Qrcode === 'undefined') {
+    setStatus('QR 스캔 모듈을 불러오지 못했습니다. 인터넷 연결 후 새로고침해주세요.', true);
     return;
   }
-  locked=true;
-  document.getElementById('assetNo').value=assetNo;
-  setStatus('인식 완료: '+assetNo+' · 자산정보를 여는 중...');
-  try{if(scanner&&running)await scanner.stop();}catch(e){}
-  location.href=GAS_URL+'?asset='+encodeURIComponent(assetNo);
+
+  try {
+    scanner = scanner || new Html5Qrcode('reader', {
+      formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+      verbose: false
+    });
+
+    const config = {
+      fps: 20,
+      qrbox: (viewWidth, viewHeight) => {
+        const side = Math.floor(Math.min(viewWidth, viewHeight) * 0.90);
+        return { width: side, height: side };
+      },
+      aspectRatio: 16 / 9,
+      disableFlip: false,
+      experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+    };
+
+    // 후면 카메라 + 가능한 경우 Full HD 해상도를 우선 요청합니다.
+    const cameraConstraints = {
+      facingMode: { ideal: 'environment' },
+      width: { ideal: 1920 },
+      height: { ideal: 1080 }
+    };
+
+    try {
+      await scanner.start(cameraConstraints, config, onSuccess, onScanFailure);
+    } catch (highResError) {
+      // 일부 iPhone/Safari에서 해상도 제약을 거부하면 후면카메라만 요청하여 재시도합니다.
+      await scanner.start({ facingMode: 'environment' }, config, onSuccess, onScanFailure);
+    }
+
+    running = true;
+    document.getElementById('startBtn').style.display = 'none';
+    document.getElementById('stopBtn').style.display = 'block';
+    setStatus('스캔 중입니다. QR을 중앙에 맞춰주세요. 작은 QR은 화면 확대 기능을 사용해보세요.');
+
+    await setupCameraTools();
+  } catch (e) {
+    console.error(e);
+    setStatus('카메라를 열 수 없습니다. Safari에서 이 사이트의 카메라 권한을 허용한 뒤 새로고침해주세요.', true);
+  }
 }
+
+function onScanFailure(){
+  // 매 프레임마다 오류 문구를 표시하지 않습니다.
+}
+
+async function setupCameraTools(){
+  const tools = document.getElementById('tools');
+  const zoomRow = document.getElementById('zoomRow');
+  const torchBtn = document.getElementById('torchBtn');
+  let hasTool = false;
+
+  try {
+    const caps = scanner.getRunningTrackCapabilities ? scanner.getRunningTrackCapabilities() : {};
+    const settings = scanner.getRunningTrackSettings ? scanner.getRunningTrackSettings() : {};
+
+    if (caps && caps.zoom && Number.isFinite(caps.zoom.min) && Number.isFinite(caps.zoom.max) && caps.zoom.max > caps.zoom.min) {
+      const range = document.getElementById('zoomRange');
+      const current = Number(settings.zoom || caps.zoom.min || 1);
+      range.min = caps.zoom.min;
+      range.max = caps.zoom.max;
+      range.step = caps.zoom.step || 0.1;
+      range.value = current;
+      document.getElementById('zoomValue').textContent = current.toFixed(1) + '×';
+      zoomRow.style.display = 'flex';
+      hasTool = true;
+    }
+
+    if (caps && caps.torch) {
+      torchBtn.style.display = 'block';
+      hasTool = true;
+    }
+
+    // 지원되는 브라우저에서는 연속 초점을 우선 요청합니다.
+    if (caps && Array.isArray(caps.focusMode) && caps.focusMode.includes('continuous')) {
+      try {
+        await scanner.applyVideoConstraints({ advanced: [{ focusMode: 'continuous' }] });
+      } catch (_) {}
+    }
+  } catch (_) {}
+
+  tools.style.display = hasTool ? 'block' : 'none';
+}
+
+async function changeZoom(value){
+  if (!scanner || !running) return;
+  const z = Number(value);
+  document.getElementById('zoomValue').textContent = z.toFixed(1) + '×';
+  try {
+    await scanner.applyVideoConstraints({ advanced: [{ zoom: z }] });
+  } catch (_) {}
+}
+
+async function toggleTorch(){
+  if (!scanner || !running) return;
+  torchOn = !torchOn;
+  try {
+    await scanner.applyVideoConstraints({ advanced: [{ torch: torchOn }] });
+    document.getElementById('torchBtn').textContent = torchOn ? '플래시 끄기' : '플래시 켜기';
+  } catch (_) {
+    torchOn = false;
+  }
+}
+
+async function stopScanner(){
+  if (scanner && running) {
+    try { await scanner.stop(); } catch (_) {}
+  }
+  running = false;
+  torchOn = false;
+  document.getElementById('startBtn').style.display = 'block';
+  document.getElementById('stopBtn').style.display = 'none';
+  document.getElementById('tools').style.display = 'none';
+  setStatus('스캔을 종료했습니다.');
+}
+
+async function onSuccess(decodedText){
+  if (locked) return;
+
+  const assetNo = extractAssetNo(decodedText);
+  if (!assetNo) {
+    const now = Date.now();
+    if (now - lastUnknownAt > 1800) {
+      lastUnknownAt = now;
+      setStatus('QR은 읽었습니다. 자산번호 형식을 확인하고 있습니다...', true);
+    }
+    return;
+  }
+
+  locked = true;
+  document.getElementById('assetNo').value = assetNo;
+  setStatus('인식 완료: ' + assetNo + ' · 자산점검 화면으로 이동합니다.');
+
+  try {
+    if (scanner && running) await scanner.stop();
+  } catch (_) {}
+
+  running = false;
+  location.href = GAS_URL + '?asset=' + encodeURIComponent(assetNo);
+}
+
 function manualGo(){
-  const assetNo=extractAssetNo(document.getElementById('assetNo').value);
-  if(!assetNo){setStatus('A20190362 형식으로 자산번호를 입력해주세요.',true);return;}
-  location.href=GAS_URL+'?asset='+encodeURIComponent(assetNo);
+  const assetNo = extractAssetNo(document.getElementById('assetNo').value);
+  if (!assetNo) {
+    setStatus('A20190362 형식으로 자산번호를 입력해주세요.', true);
+    return;
+  }
+  location.href = GAS_URL + '?asset=' + encodeURIComponent(assetNo);
 }
 </script>
 </body>
